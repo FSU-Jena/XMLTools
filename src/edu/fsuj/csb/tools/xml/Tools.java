@@ -80,8 +80,12 @@ public class Tools {
 	 * display a message after a leading "Warning: " on the error-output, but only display it once
 	 * @param message the message to be shown
 	 */
-	public static void warnOnce(String message){
-		if (!givenWarnings.contains(message)) warn(message);
+	public static boolean warnOnce(String message){
+		if (!givenWarnings.contains(message)) {
+			warn(message);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -201,6 +205,10 @@ public class Tools {
 			index++;
 		}		
 	  return num.toString();
+	}
+	
+	public static void resetIntendation(){
+		intendation=0;
 	}
 
 	public static void main(String[] args) {
