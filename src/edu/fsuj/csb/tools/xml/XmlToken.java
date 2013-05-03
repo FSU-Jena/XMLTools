@@ -210,8 +210,8 @@ public class XmlToken implements XmlObject{
 	 * creates an Interator on the collection of subtokens of this tag
 	 * @return the iterator of the subordered tokens
 	 */
-	public Iterator<XmlToken> subtokenIterator() {
-		return subTokens.iterator();
+	public Vector<XmlToken> subtokens() {
+		return subTokens;
 	}
 
 	/**
@@ -270,8 +270,7 @@ public class XmlToken implements XmlObject{
 			sb.append("/>\n");
 		} else {			
 			sb.append(">\n");
-			for (Iterator<XmlToken> it = subtokenIterator(); it.hasNext();){
-				XmlToken subtoken = it.next();
+			for (XmlToken subtoken:subtokens()){
 				subtoken.write(sb);
 			}
 			if (content!=null) sb.append(content);
