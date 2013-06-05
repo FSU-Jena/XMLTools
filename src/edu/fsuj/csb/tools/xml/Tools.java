@@ -215,4 +215,11 @@ public class Tools {
 		System.out.println(firstNumber("      Average: 291.3853<br>Monoisotopic: 291.183443671")+"<");
 	}
 
+	public static void dieLoudly(String string) {
+		int a=0;
+		int b=0;
+		System.err.println(string);
+		System.out.println(a/b);
+  }
+
 }
