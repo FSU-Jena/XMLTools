@@ -221,5 +221,10 @@ public class Tools {
 		System.err.println(string);
 		System.out.println(a/b);
   }
+	
+	public static TreeSet<Integer> nonNullSet(TreeSet<Integer> set) {
+		if (set==null) return new TreeSet<Integer>();
+	  return set;
+  }
 
 }
