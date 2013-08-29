@@ -302,4 +302,13 @@ public class XmlToken implements XmlObject{
 	public void setContent(String c){
 		content=c;
 	}
+
+	public void setValue(String key, int value) {
+		setValue(key, ""+value);
+  }
+
+	public int getIntValue(String key) {
+	  return Integer.parseInt(getValue(key));
+		
+  }
 }
