@@ -53,7 +53,7 @@ public class XmlToken implements XmlObject{
 	
 	public XmlToken(String tClass) {
 		subTokens = new Vector<XmlToken>();
-		tokenClass=tClass;
+		tokenClass=tClass.replace(" ", "");
 		values=null;
 		content=null;
   }
@@ -260,7 +260,7 @@ public class XmlToken implements XmlObject{
 	
 	public void write(StringBuffer sb){		
 		sb.append("<"+tokenClass);
-		if (!values.isEmpty()){
+		if (values!=null && !values.isEmpty()){
 			for (Iterator<Entry<String, String>> it = values.entrySet().iterator();it.hasNext();){
 				Entry<String, String> entry = it.next();
 				sb.append(" "+entry.getKey()+"=\""+entry.getValue()+"\"");
@@ -273,7 +273,7 @@ public class XmlToken implements XmlObject{
 			for (XmlToken subtoken:subtokens()){
 				subtoken.write(sb);
 			}
-			if (content!=null) sb.append(content);
+			if (content!=null) sb.append(content+"\n");
 			sb.append("</"+tokenClass+">\n");
 		}
 	}
