@@ -2,6 +2,7 @@ package edu.fsuj.csb.tools.xml;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -117,7 +118,7 @@ public class XmlToken implements XmlObject{
 	 */
 	public StringBuffer description() {
 		StringBuffer sb = new StringBuffer("token class=" + tokenClass + "\n");
-		if (content() !=null) sb.append(" * content: "+content+"\n");
+		if (content() !=null ) sb.append(" * content: "+content+"\n");
 		if (values != null) {
 			for (Iterator<String> it = values.keySet().iterator(); it.hasNext();) {
 				String key = it.next();
@@ -273,7 +274,7 @@ public class XmlToken implements XmlObject{
 			for (XmlToken subtoken:subtokens()){
 				subtoken.write(sb);
 			}
-			if (content!=null) sb.append(content+"\n");
+			if (content()!=null) sb.append(content+"\n");
 			sb.append("</"+tokenClass+">\n");
 		}
 	}
@@ -292,6 +293,11 @@ public class XmlToken implements XmlObject{
 		write(result);
 	  return result;
   }
+	
+	@SuppressWarnings("rawtypes")
+  public void setContent(Collection c){
+		setContent(c.toString().replace("[", "").replace("]", ""));
+	}
 	
 	public void setContent(String c){
 		content=c;

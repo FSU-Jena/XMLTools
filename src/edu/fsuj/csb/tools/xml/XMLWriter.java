@@ -23,7 +23,7 @@ public class XMLWriter {
 	 */
 	public XMLWriter(String filename) throws SecurityException, IOException{
 		file=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "UTF-8"));
-		file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");		
+		file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");		
 	}
 	
 	/**
@@ -34,7 +34,7 @@ public class XMLWriter {
 	 */
 	public XMLWriter(URL url) throws URISyntaxException, IOException {
 		file=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(url.toURI())), "UTF-8"));
-		file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");	
+		file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");	
   }
 
 	/**
