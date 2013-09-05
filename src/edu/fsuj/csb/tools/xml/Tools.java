@@ -1,5 +1,8 @@
 package edu.fsuj.csb.tools.xml;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.TreeSet;
 
@@ -176,7 +179,9 @@ public class Tools {
   }
 	
 	public static void setIntendationLimit(int limit){
-		intendationLimit=limit;
+		if (limit<0) {
+			intendationLimit=Integer.MAX_VALUE;
+		} else intendationLimit=limit;
 	}
 
 	public static void enableLogging(int intendationLimit) {
@@ -225,6 +230,17 @@ public class Tools {
 	public static TreeSet<Integer> nonNullSet(TreeSet<Integer> set) {
 		if (set==null) return new TreeSet<Integer>();
 	  return set;
+  }
+
+	public static void restoreSysOut() {
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+  }
+
+	public static void endMethod(Object o, int maxLen) {		
+		String s=o.toString();
+		if (s.length()>maxLen-5){
+			endMethod("{"+s.substring(0,maxLen-5)+"...}");
+		} else endMethod(s);
   }
 
 }

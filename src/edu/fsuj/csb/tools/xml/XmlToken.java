@@ -17,7 +17,7 @@ import java.util.Vector;
  */
 public class XmlToken implements XmlObject{
 	private Vector<XmlToken> subTokens; // the set of tokens contained by this token
-	private String tokenClass = null; // the class strng of this token
+	protected String tokenClass = null; // the class strng of this token
 	private TreeMap<String, String> values; // the mapping from this token's elements to their values
 	private BufferedReader reader;
 	private String content=null;
@@ -57,6 +57,11 @@ public class XmlToken implements XmlObject{
 		tokenClass=tClass.replace(" ", "");
 		values=null;
 		content=null;
+  }
+
+	public XmlToken() {
+		this("XmlToken");
+		tokenClass=getClass().getSimpleName().toLowerCase();
   }
 
 	/**
@@ -224,7 +229,8 @@ public class XmlToken implements XmlObject{
 		return subTokens.size();
 	}
 
-	/**
+	
+  /**
 	 * requests the value related to a certain key for this token
 	 * @param key the name of the key
 	 * @return the value related to the key or null, if there is no such key present
@@ -259,7 +265,19 @@ public class XmlToken implements XmlObject{
 		return content;
 	}
 	
-	public void write(StringBuffer sb){		
+	public void add(XmlToken token) {
+		subTokens.add(token);
+  }
+
+	public void setValue(String key, Object value) {
+		if (values == null) values = new TreeMap<String, String>(ObjectComparator.get());
+		values.put(key, value.toString());
+  }
+
+	public StringBuffer getCode() {
+		Tools.startMethod("XmlToken["+tokenClass+"].getCode()");
+		StringBuffer sb=new StringBuffer();		
+		
 		sb.append("<"+tokenClass);
 		if (values!=null && !values.isEmpty()){
 			for (Iterator<Entry<String, String>> it = values.entrySet().iterator();it.hasNext();){
@@ -268,30 +286,18 @@ public class XmlToken implements XmlObject{
 			}
 		}
 		if (this.subTokens.isEmpty() && content==null){
-			sb.append("/>\n");
+			sb.append("/>");
 		} else {			
 			sb.append(">\n");
 			for (XmlToken subtoken:subtokens()){
-				subtoken.write(sb);
+				sb.append(subtoken.getCode()+"\n");
 			}
 			if (content()!=null) sb.append(content+"\n");
-			sb.append("</"+tokenClass+">\n");
-		}
-	}
-
-	public void add(XmlToken token) {
-		subTokens.add(token);
-  }
-
-	public void setValue(String key, String value) {
-		if (values == null) values = new TreeMap<String, String>(ObjectComparator.get());
-		values.put(key, value);
-  }
-
-	public StringBuffer getCode() {
-		StringBuffer result=new StringBuffer();
-		write(result);
-	  return result;
+			sb.append("</"+tokenClass+">");
+		}		
+		System.err.println(tokenClass+" code created.");
+		Tools.endMethod(sb,40);		
+	  return sb;
   }
 	
 	@SuppressWarnings("rawtypes")
@@ -299,8 +305,8 @@ public class XmlToken implements XmlObject{
 		setContent(c.toString().replace("[", "").replace("]", ""));
 	}
 	
-	public void setContent(String c){
-		content=c;
+	public void setContent(Object o){
+		content=o.toString();
 	}
 
 	public void setValue(String key, int value) {
