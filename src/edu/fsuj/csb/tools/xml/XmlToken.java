@@ -274,10 +274,8 @@ public class XmlToken implements XmlObject{
 		values.put(key, value.toString());
   }
 
-	public StringBuffer getCode() {
+	public void getCode(StringBuffer sb) {
 		Tools.startMethod("XmlToken["+tokenClass+"].getCode()");
-		StringBuffer sb=new StringBuffer();		
-		
 		sb.append("<"+tokenClass);
 		if (values!=null && !values.isEmpty()){
 			for (Iterator<Entry<String, String>> it = values.entrySet().iterator();it.hasNext();){
@@ -289,15 +287,14 @@ public class XmlToken implements XmlObject{
 			sb.append("/>");
 		} else {			
 			sb.append(">\n");
-			for (XmlToken subtoken:subtokens()){
-				sb.append(subtoken.getCode()+"\n");
+			for (XmlToken subtoken:subtokens()){				
+				subtoken.getCode(sb);
+				sb.append("\n");
 			}
 			if (content()!=null) sb.append(content+"\n");
 			sb.append("</"+tokenClass+">");
 		}		
-		System.err.println(tokenClass+" code created.");
-		Tools.endMethod(sb,40);		
-	  return sb;
+		Tools.endMethod();		
   }
 	
 	@SuppressWarnings("rawtypes")

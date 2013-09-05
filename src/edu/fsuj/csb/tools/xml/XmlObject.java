@@ -11,5 +11,5 @@ public interface XmlObject {
 	 * returns the xml representation of this object
 	 * @return the xml code string as stringbuffer
 	 */
-	public StringBuffer getCode();
+	public void getCode(StringBuffer sb);
 }

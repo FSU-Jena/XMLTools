@@ -43,7 +43,9 @@ public class XMLWriter {
 	 * @throws IOException
 	 */
 	public void write(XmlObject o) throws IOException{
-		file.write(o.getCode().toString());		
+		StringBuffer sb=new StringBuffer();
+		o.getCode(sb);
+		file.write(sb.toString());		
 	}
 
 	/**
