@@ -21,6 +21,10 @@ public class Tools {
 	public static TreeSet<String> StringSet(){
   	return new TreeSet<String>(ObjectComparator.get());
   }
+	
+	public static String removeHtmlEntities(String text){
+		return text.replace("&gt;",">").replace("&lt;","<").replace("&nbsp;", " ").replace("&amp;", "&").replace("&apos;", "'");
+	}
 
 	/**
    * strips html tags off a string
@@ -37,7 +41,7 @@ public class Tools {
   		} else line=line.substring(0,open);
   		open=line.indexOf("<");
   	}
-  	line=line.replace("&gt;",">").replace("&lt;","<").replace("&nbsp;", " ").replace("&amp;", "&");
+  	line=removeHtmlEntities(line);
   	int i;
   	while ((i=line.indexOf("&#"))>0){
   		int j=line.indexOf(";",i);
