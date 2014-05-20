@@ -43,13 +43,19 @@ public class Tools {
   	}
   	line=removeHtmlEntities(line);
   	int i;
+  	while ((i=line.indexOf("&#x"))>0){
+  		int j=line.indexOf(";",i);
+  		String code=line.substring(i+3,j);
+  		char c=((char)Integer.parseInt(code,16));
+  		line=line.replace("&#x"+code+";", ""+c);
+  	}
   	while ((i=line.indexOf("&#"))>0){
   		int j=line.indexOf(";",i);
   		String code=line.substring(i+2,j);
   		char c=((char)Integer.parseInt(code));
   		line=line.replace("&#"+code+";", ""+c);
   	}
-    return  line;
+    return line;
   }
 
 	public static String replaceSymbolFont(String line) {
